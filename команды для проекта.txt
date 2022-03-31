@@ -1,0 +1,60 @@
+venv\scripts\activate
+
+cd .\NewsPaper\
+
+py manage.py shell
+from news.models import*
+
+p1 = User.objects.create_user(username='name 1')
+p2 = User.objects.create_user(username='name 2')
+
+Author.objects.create(authorUser=p1)
+Author.objects.create(authorUser=p2)
+
+Category.objects.create(name='it')
+Category.objects.create(name='sport') 
+Category.objects.create(name='health')
+Category.objects.create(name='food')
+
+Post.objects.create(author=Author.objects.get(id=1), article_or_news='NW', title_post='text 1')
+Post.objects.create(author=Author.objects.get(id=1), article_or_news='AR', title_post='text 2') 
+Post.objects.create(author=Author.objects.get(id=2), article_or_news='AR', title_post='text 3')
+
+Post.objects.get(id=1).categories.add(sport, health) 
+Post.objects.get(id=2).categories.add(food) 
+Post.objects.get(id=3).categories.add(it) 
+
+Comment.objects.create(post=Post.objects.get(id=1), user=User.objects.get(username='user1'), text_comment='comment 1') 
+Comment.objects.create(post=Post.objects.get(id=1), user=User.objects.get(username='user2'), text_comment='comment 2') 
+Comment.objects.create(post=Post.objects.get(id=2), user=User.objects.get(username='user3'), text_comment='comment 3') 
+Comment.objects.create(post=Post.objects.get(id=3), user=User.objects.get(username='user4'), text_comment='comment 4') 
+
+Post.objects.get(id=1).like()
+Post.objects.get(id=1).like()
+Post.objects.get(id=1).dislike()
+Post.objects.get(id=1).like()
+Post.objects.get(id=2).dislike()
+Post.objects.get(id=2).dislike()
+Post.objects.get(id=2).dislike()
+Post.objects.get(id=2).like()
+Post.objects.get(id=3).like()
+Post.objects.get(id=3).like()
+Post.objects.get(id=3).like()
+Post.objects.get(id=3).like()
+Post.objects.get(id=3).dislike()
+
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=1).like()
+Comment.objects.get(id=2).like()
+Comment.objects.get(id=3).like()
+Comment.objects.get(id=3).like()
+Comment.objects.get(id=3).dislike()
+Comment.objects.get(id=4).like()
+
+
+
+
+
+
+
+
