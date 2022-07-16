@@ -1,0 +1,30 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %} Articles {% endblock title %}
+
+{% block content %}
+<table>
+    <thead>
+        <th>
+            Name
+        </th>
+        <th>
+            Publication
+        </th>
+        <th>
+            Description
+        </th>
+    </thead>
+    <tr>
+        <td>
+            {{ article.name|title }}
+        </td>
+        <td>
+            {{ article.publication }}
+        </td>
+        <td>
+            {{ article.description|title }}
+        </td>
+    </tr>
+</table>
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+Search
+{% endblock title %}
+
+{% block content %}
+
+<h3>Всего новостей: {{articles|length}} </h3>
+
+<hr>
+    <form method="GET">
+        {{ filter.form }} <!-- Форму от фильтров за нас сделает django. А вот кнопку, увы придётся делать самому -->
+        <input type="submit" value="Найти">
+    </form>
+
+
+{% if articles %}
+        <table>
+            <tr>
+                <td>Название</td>
+                <td>Дата публикации</td>
+                <td>Описание</td>
+            </tr>
+
+            {% for article in filter.qs %}
+            <tr>
+                <td>
+                    <a href="{% url 'article_detail' article.id %}">{{ article.name|truncatechars:100|censor }}</a> <!-- При нажатии на имя товара в таблице нас теперь будет перекидывать на страницу с самого товара -->
+                </td>
+                <td>{{ article.publication }}</td>
+                <td>{{ article.description|truncatechars:20|censor }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+{% else %}
+    <h2>Новостей нет!</h2>!
+{% endif %}
+
+{% endblock content %}
+

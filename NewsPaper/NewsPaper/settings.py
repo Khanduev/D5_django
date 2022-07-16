@@ -41,9 +41,18 @@ INSTALLED_APPS = [
 
     'django.contrib.sites',
     'django.contrib.flatpages',
+    'django_filters',
 
     'news',
     'simpleapp',
+    'sign',
+    'protect',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.google',
 ]
 
 SITE_ID = 1
@@ -135,7 +144,25 @@ STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
 
-
 REST_FRAMEWORK = {
-    'DATETIME_FORMAT': "%d.%m.%Y %H:%M:%S",
+    'DATETIME_FORMAT': "%H:%M:%S %d.%m.%Y",
 }
+
+#LOGIN_URL = 'sign/login'
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+
+ACCOUNT_FORMS = {'signup': 'sign.models.BasicSignupForm'}
